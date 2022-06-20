@@ -37,3 +37,7 @@ nb-configuration.xml
 
 # Local environment
 .env
+
+# Credentials
+application.properties
+pom.xml

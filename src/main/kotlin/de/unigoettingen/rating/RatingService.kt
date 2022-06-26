@@ -10,14 +10,8 @@ class RatingService {
     lateinit var ratingRepository: RatingRepository
 
     fun getRating(company: String): RatingView? {
-        val ratings = ratingRepository.getRatings(company)
+        val rating = ratingRepository.getLastRating(company) ?: throw WebApplicationException("Rating could not be found", 404)
 
-        if (ratings.isEmpty()) {
-            throw WebApplicationException("Rating could not be found", 404)
-        }
-
-        val averageRating = ratings.sumOf { it.rating ?: 0 } / ratings.size
-
-        return RatingView(company.uppercase(), averageRating)
+        return RatingView(company.uppercase(), rating.rating)
     }
 }

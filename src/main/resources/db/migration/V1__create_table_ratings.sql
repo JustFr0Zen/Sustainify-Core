@@ -1,7 +1,7 @@
 CREATE TABLE ratings
 (
     company varchar(255) NOT NULL REFERENCES companies ON DELETE CASCADE,
-    rating INTEGER NOT NULL,
-    year INTEGER NOT NULL,
-    PRIMARY KEY (year, company)
+    rating FLOAT NOT NULL,
+    inserted_at TIMESTAMP NOT NULL,
+    PRIMARY KEY (inserted_at, company)
 );

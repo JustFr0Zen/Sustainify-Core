@@ -4,6 +4,8 @@ import de.unigoettingen.api.database.Jooq
 import de.unigoettingen.jooq.tables.Ratings.RATINGS
 import de.unigoettingen.jooq.tables.pojos.Ratings
 import org.jooq.impl.DSL.max
+import java.sql.Timestamp
+import java.time.LocalDateTime
 import javax.enterprise.context.ApplicationScoped
 import javax.inject.Inject
 
@@ -18,11 +20,11 @@ class RatingRepository {
                 .where(
                     RATINGS.COMPANY.eq(company.uppercase())
                         .and(
-                            RATINGS.YEAR.eq(
-                                db.select(max(RATINGS.YEAR).`as`("max"))
+                            RATINGS.INSERTED_AT.eq(
+                                db.select(max(RATINGS.INSERTED_AT).`as`("max"))
                                     .from(RATINGS)
                                     .where(RATINGS.COMPANY.eq(company.uppercase()))
-                                    .fetchOne("max")?.let { it as Int } ?: -1
+                                    .fetchOne("max")?.let { it as Timestamp } ?: Timestamp.valueOf(LocalDateTime.now())
                             )
                         )
                 )
